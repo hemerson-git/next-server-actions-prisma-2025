@@ -6,10 +6,12 @@ import { Header } from "./components/Header";
 import { Title } from "./components/Title";
 import { Footer } from "./components/Footer";
 import { Input } from "./components/Input";
+import { ThemeProvider } from "styled-components";
+import theme from "./theme/theme";
 
 function App() {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Header />
 
       <h1>My App</h1>
@@ -28,7 +30,7 @@ function App() {
       </Card>
 
       <Footer />
-    </>
+    </ThemeProvider>
   );
 }
 

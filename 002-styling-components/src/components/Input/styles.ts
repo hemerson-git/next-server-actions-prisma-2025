@@ -14,14 +14,14 @@ export const CustomInput = styled.input`
   transition: all 0.3s ease;
   border: 1px solid transparent;
   outline: none;
-  border-bottom: 1px solid #d1d1d1;
+  border-bottom: 1px solid ${(props) => props.theme.colors.secondary};
   margin: 12px 0;
 
   &:hover {
-    animation: ${rotate} 2s linear infinite;
+    /* animation: ${rotate} 2s linear infinite; */
   }
 
   &:focus {
-    border: 1px solid #8d9ce2;
+    border: 1px solid ${(props) => props.theme.colors.primary};
   }
 `;
