@@ -1,10 +1,17 @@
+import "./globals.css";
+
 import { Button } from "./components/Button";
 import { Card } from "./components/Card";
+import { Header } from "./components/Header";
 import { Title } from "./components/Title";
+import { Footer } from "./components/Footer";
+
 
 function App() {
   return (
     <>
+      <Header />
+    
       <h1>My App</h1>
       <p>This is my app.</p>
 
@@ -18,6 +25,8 @@ function App() {
         </p>
         <Button>Click me</Button>
       </Card>
+
+      <Footer />
     </>
   );
 }

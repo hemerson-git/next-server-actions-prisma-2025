@@ -1,0 +1,21 @@
+.header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: #c6c6cd;
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+}
+
+.header nav ul {
+    display: flex;
+    list-style: none;
+    gap: 6px;
+    justify-content: flex-end;
+}
+
+.header nav a {
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+}
