@@ -1,5 +1,5 @@
 button.button-primary {
-  background-color: ${props => props.theme.colors.primary};
+  background-color: #007bff;
   color: white;
 }
 
@@ -9,10 +9,6 @@ button {
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s;
-
-  &:hover {
-    opacity: 0.8;
-  }
 }
 
 button:hover {

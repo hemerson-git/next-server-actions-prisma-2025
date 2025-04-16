@@ -8,8 +8,30 @@ import { Footer } from "./components/Footer";
 import { Input } from "./components/Input";
 import { ThemeProvider } from "styled-components";
 import theme from "./theme/theme";
+import { useState } from "react";
+
+type Post = {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
+};
 
 function App() {
+  const [postsData, setPostsData] = useState<Post[]>([]);
+
+  const handleGetPosts = async () => {
+    const posts = await fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const postsJson: Post[] = await posts.json();
+    setPostsData(postsJson);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Header />
@@ -26,8 +48,14 @@ function App() {
           beatae?
         </p>
         <Input placeholder="Enter your name" />
-        <Button>Click me</Button>
+        <Button onClick={handleGetPosts}>Click me</Button>
       </Card>
+
+      <ul>
+        {postsData.map((post) => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
 
       <Footer />
     </ThemeProvider>
