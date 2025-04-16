@@ -5,13 +5,13 @@ import { Card } from "./components/Card";
 import { Header } from "./components/Header";
 import { Title } from "./components/Title";
 import { Footer } from "./components/Footer";
-
+import { Input } from "./components/Input";
 
 function App() {
   return (
     <>
       <Header />
-    
+
       <h1>My App</h1>
       <p>This is my app.</p>
 
@@ -23,6 +23,7 @@ function App() {
           officia odio voluptates aliquam pariatur animi accusamus quis minima
           beatae?
         </p>
+        <Input placeholder="Enter your name" />
         <Button>Click me</Button>
       </Card>
 
