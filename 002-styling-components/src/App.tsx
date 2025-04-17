@@ -19,8 +19,10 @@ type Post = {
 
 function App() {
   const [postsData, setPostsData] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleGetPosts = async () => {
+    setLoading(true);
     const posts = await fetch("https://jsonplaceholder.typicode.com/posts", {
       method: "GET",
       headers: {
@@ -30,6 +32,7 @@ function App() {
 
     const postsJson: Post[] = await posts.json();
     setPostsData(postsJson);
+    setLoading(false);
   };
 
   return (
@@ -50,6 +53,8 @@ function App() {
         <Input placeholder="Enter your name" />
         <Button onClick={handleGetPosts}>Click me</Button>
       </Card>
+
+      {loading && <p>Loading...</p>}
 
       <ul>
         {postsData.map((post) => (
