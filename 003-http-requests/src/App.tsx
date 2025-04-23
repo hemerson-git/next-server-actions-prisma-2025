@@ -8,44 +8,11 @@ import { Footer } from "./components/Footer";
 import { Input } from "./components/Input";
 import { ThemeProvider } from "styled-components";
 import theme from "./theme/theme";
-import { useState } from "react";
-
-type Post = {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-};
+import { Posts } from "./components/Posts";
+import { usePosts } from "./components/Posts/usePosts";
 
 function App() {
-  const [postsData, setPostsData] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  const handleGetPosts = async () => {
-    setLoading(true);
-
-    try {
-      const posts = await fetch("https://jsonplaceholder.typicode.com/posts", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!posts.ok) {
-        throw new Error("Something went wrong");
-      }
-
-      const postsJson: Post[] = await posts.json();
-      setPostsData(postsJson);
-    } catch (error) {
-      setErrorMessage("Something went wrong.");
-      console.error(error);
-    }
-
-    setLoading(false);
-  };
+  const { errorMessage, loading, postsData, getPosts } = usePosts();
 
   return (
     <ThemeProvider theme={theme}>
@@ -63,17 +30,13 @@ function App() {
           beatae?
         </p>
         <Input placeholder="Enter your name" />
-        <Button onClick={handleGetPosts}>Click me</Button>
+        <Button onClick={getPosts}>Click me</Button>
       </Card>
 
       {loading && <p>Loading...</p>}
       {errorMessage && <p>{errorMessage}</p>}
 
-      <ul>
-        {postsData.map((post) => (
-          <li key={post.id}>{post.title}</li>
-        ))}
-      </ul>
+      <Posts posts={postsData} />
 
       <Footer />
     </ThemeProvider>
