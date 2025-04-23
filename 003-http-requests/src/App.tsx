@@ -10,6 +10,7 @@ import { ThemeProvider } from "styled-components";
 import theme from "./theme/theme";
 import { Posts } from "./components/Posts";
 import { usePosts } from "./components/Posts/usePosts";
+import { CreateForm } from "./components/Posts/CreateForm";
 
 function App() {
   const { errorMessage, loading, postsData, getPosts } = usePosts();
@@ -21,17 +22,21 @@ function App() {
       <h1>My App</h1>
       <p>This is my app.</p>
 
-      <Card>
-        <Title>Card Title</Title>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam sequi ea
-          ipsam! Ipsa nisi velit animi totam hic? Reprehenderit, quisquam
-          officia odio voluptates aliquam pariatur animi accusamus quis minima
-          beatae?
-        </p>
-        <Input placeholder="Enter your name" />
-        <Button onClick={getPosts}>Click me</Button>
-      </Card>
+      <div>
+        <Card>
+          <Title>Card Title</Title>
+          <p>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam sequi
+            ea ipsam! Ipsa nisi velit animi totam hic? Reprehenderit, quisquam
+            officia odio voluptates aliquam pariatur animi accusamus quis minima
+            beatae?
+          </p>
+          <Input placeholder="Enter your name" />
+          <Button onClick={getPosts}>Click me</Button>
+        </Card>
+
+        <CreateForm />
+      </div>
 
       {loading && <p>Loading...</p>}
       {errorMessage && <p>{errorMessage}</p>}

@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Post } from ".";
+import { CreatePost } from "./CreateForm";
 
 interface UsePosts {
   postsData: Post[];
   loading: boolean;
   errorMessage: string | null;
   getPosts: () => void;
+  createPost: (post: CreatePost) => Promise<Post | undefined>;
 }
 
 export const usePosts = (): UsePosts => {
@@ -38,10 +40,41 @@ export const usePosts = (): UsePosts => {
     setLoading(false);
   };
 
+  const handleCreatePost = async (post: CreatePost) => {
+    setLoading(true);
+    let result;
+
+    try {
+      const newPost = await fetch(
+        "https://jsonplaceholder.typicode.com/posts",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(post),
+        }
+      );
+
+      if (!newPost.ok) {
+        throw new Error("Something went wrong");
+      }
+
+      const newPostJson: Post = await newPost.json();
+      result = newPostJson;
+    } catch (error) {
+      console.error(error);
+    }
+
+    setLoading(false);
+    return result;
+  };
+
   return {
     postsData,
     loading,
     errorMessage,
     getPosts: handleGetPosts,
+    createPost: handleCreatePost,
   };
 };
