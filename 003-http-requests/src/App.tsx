@@ -20,18 +20,30 @@ type Post = {
 function App() {
   const [postsData, setPostsData] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleGetPosts = async () => {
     setLoading(true);
-    const posts = await fetch("https://jsonplaceholder.typicode.com/post", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
 
-    const postsJson: Post[] = await posts.json();
-    setPostsData(postsJson);
+    try {
+      const posts = await fetch("https://jsonplaceholder.typicode.com/posts", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!posts.ok) {
+        throw new Error("Something went wrong");
+      }
+
+      const postsJson: Post[] = await posts.json();
+      setPostsData(postsJson);
+    } catch (error) {
+      setErrorMessage("Something went wrong.");
+      console.error(error);
+    }
+
     setLoading(false);
   };
 
@@ -55,9 +67,10 @@ function App() {
       </Card>
 
       {loading && <p>Loading...</p>}
+      {errorMessage && <p>{errorMessage}</p>}
 
       <ul>
-        {postsData?.map((post) => (
+        {postsData.map((post) => (
           <li key={post.id}>{post.title}</li>
         ))}
       </ul>
