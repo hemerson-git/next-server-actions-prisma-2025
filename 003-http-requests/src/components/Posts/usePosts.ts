@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Post } from ".";
 import { CreatePost } from "./CreateForm";
+import { getPosts } from "../../services/posts/posts";
 
 interface UsePosts {
   postsData: Post[];
@@ -45,6 +46,9 @@ export const usePosts = (): UsePosts => {
     let result;
 
     try {
+      const axiosPosts = getPosts();
+      console.log("axios", axiosPosts);
+
       const newPost = await fetch(
         "https://jsonplaceholder.typicode.com/posts",
         {
