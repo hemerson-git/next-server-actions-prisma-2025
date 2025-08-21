@@ -56,4 +56,6 @@ export const signup = async ({ data }: SignUpProps) => {
     email: data.email,
     redirect: false,
   });
+
+  redirect({ href: "/auth/verify-email", locale: intl.defaultLocale });
 };

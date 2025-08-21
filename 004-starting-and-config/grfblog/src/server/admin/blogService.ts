@@ -5,6 +5,7 @@ import { auth } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { redirect } from "@/lib/navigation";
 import { revalidatePath } from "next/cache";
+import { User } from "next-auth";
 
 export const getMyBlogs = async () => {
   const user = await auth();
@@ -101,4 +102,41 @@ export const updateBlog = async ({ blogId, data }: UpdateBlogProps) => {
       locale: intl.defaultLocale,
     });
   }
+};
+
+export const getBlog = async ({ slug, user }: { slug: string; user: User }) => {
+  const blog = await prisma.blog.findFirst({
+    where: {
+      slug,
+      deletedAt: null,
+    },
+    include: {
+      users: {
+        where: {
+          userId: user.id,
+        },
+      },
+    },
+  });
+
+  const blogBelongsToUser = blog?.users.some((data) => data.userId === user.id);
+
+  if (!blogBelongsToUser || blog) {
+    return { error: "BLOG_NOT_FOUND" };
+  }
+
+  return { data: blog };
+};
+
+export const deleteBlog = async ({ blogId }: { blogId: string }) => {
+  await prisma.blog.update({
+    where: {
+      id: blogId,
+    },
+    data: {
+      deletedAt: new Date(),
+    },
+  });
+
+  redirect({ href: "/", locale: intl.defaultLocale });
 };
