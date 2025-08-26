@@ -1,12 +1,12 @@
 import { Prisma } from "@prisma/client";
 
-export type BlogWithUsers = Prisma.Payload<{
+export type BlogWithUsers = Prisma.BlogGetPayload<{
   include: {
     users: true;
   };
 }>;
 
-export type BlogUsersWithUsers = Prisma.Payload<{
+export type BlogUsersWithUsers = Prisma.BlogUserGetPayload<{
   include: {
     user: true;
   };
